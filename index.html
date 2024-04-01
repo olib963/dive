@@ -4,12 +4,16 @@
     <script type="text/javascript" src="elm.js"></script>
   </head>
   <body style="margin:0; padding:0; overflow:hidden;">
+    <div id="elm-node"></div>
     <script type="text/javascript">
       var size =
         { width : window.innerWidth
         , height : window.innerHeight
         };
-      Elm.Main.fullscreen(size);
+      Elm.Main.init({
+        node: document.getElementById("elm-node") ,
+        flags: size,
+      });
     </script>
   </body>
 </html>

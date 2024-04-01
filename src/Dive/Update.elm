@@ -1,36 +1,39 @@
-module Dive.Update exposing (update, Msg(..))
+module Dive.Update exposing (Key(..), Msg(..), update)
 
-import Time exposing (Time)
-import Keyboard exposing (KeyCode)
-import Window 
-import List.Extra
 import Dive.Model exposing (..)
+import Time
 
-type Msg = 
-  Forth
-  | Back
-  | Animate Time
-  | Resize Window.Size
-  | KeyPressed KeyCode
 
-update : Msg -> Model -> (Model, Cmd Msg)
+type Msg
+    = Forth
+    | Back
+    | Animate Time.Posix
+    | Resize WindowSize
+    | KeyPressed Key
+
+
+type Key
+    = ArrowLeft
+    | ArrowRight
+
+
+update : Msg -> Model -> Model
 update msg model =
-  (flip (,)) Cmd.none
-  <| case msg of
-      Resize size ->
-        resize size model
-      Forth ->
-        forth model
-      Back ->
-        back model
-      KeyPressed code ->
-        case code of
-          37 ->
-            back model
-          39 ->
-            forth model
-          _ ->
-            model
-      Animate diff ->
-        animate diff model
+    case msg of
+        Resize size ->
+            resize size model
 
+        Forth ->
+            forth model
+
+        Back ->
+            back model
+
+        KeyPressed ArrowLeft ->
+            back model
+
+        KeyPressed ArrowRight ->
+            forth model
+
+        Animate diff ->
+            animate diff model
