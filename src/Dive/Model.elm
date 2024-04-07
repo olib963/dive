@@ -3,7 +3,6 @@ module Dive.Model exposing (..)
 import Collage exposing (LineStyle)
 import Color exposing (Color)
 import List.Extra
-import Time
 
 
 type alias Model =
@@ -162,7 +161,7 @@ backAnimation frames =
         |> Maybe.map (initAnimation False)
 
 
-animate : Time.Posix -> Model -> Model
+animate : Float -> Model -> Model
 animate diff model =
     case model.animation of
         Nothing ->
@@ -179,7 +178,7 @@ animate diff model =
                             model.frames.current.duration
 
                 passed =
-                    animation.passed + (toFloat (Time.posixToMillis diff) / duration)
+                    animation.passed + (diff / duration)
             in
             if passed < 1 then
                 { model

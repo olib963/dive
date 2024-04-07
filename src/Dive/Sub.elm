@@ -15,7 +15,7 @@ subscriptions model =
                 Sub.none
 
             Just _ ->
-                Browser.Events.onAnimationFrame Animate
+                Browser.Events.onAnimationFrameDelta Animate
         , Browser.Events.onClick (D.succeed Forth)
         , Browser.Events.onKeyDown keyDecoder
         ]

@@ -1,13 +1,12 @@
 module Dive.Update exposing (Key(..), Msg(..), update)
 
 import Dive.Model exposing (..)
-import Time
 
 
 type Msg
     = Forth
     | Back
-    | Animate Time.Posix
+    | Animate Float
     | Resize WindowSize
     | KeyPressed Key
 
