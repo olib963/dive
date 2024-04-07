@@ -7,10 +7,7 @@ import Dive.Model exposing (..)
 import Dive.Update exposing (Msg(..))
 import Ease
 import Html exposing (Html)
-
-
-
--- import Transform exposing (Transform)
+import List.Extra
 
 
 view : Model -> Html Msg
@@ -247,10 +244,9 @@ line { color, fontFamily, height, align, lineHeight, position } i lineText =
         text_ =
             T.fromString lineText
                 |> T.color color
+                |> T.typeface (oldFontFaceToTextTypeface fontFamily)
+                |> T.size textFactor
 
-        -- TODO broken
-        -- |> T.typeface fontFamily
-        -- |> T.height textFactor
         shift =
             case align of
                 Center ->
@@ -284,3 +280,39 @@ line { color, fontFamily, height, align, lineHeight, position } i lineText =
             ( position.x + shift
             , position.y + height_ / 2 - (toFloat i * (height * lineHeight))
             )
+
+
+{-| A hacky little function to try and turn the generic List String representation of a font in to a Text Typeface
+-}
+oldFontFaceToTextTypeface : List String -> T.Typeface
+oldFontFaceToTextTypeface fontFamily =
+    case fontFamily of
+        [ "serif" ] ->
+            T.Serif
+
+        [ "sans-serif" ] ->
+            T.Sansserif
+
+        [ "monospace" ] ->
+            T.Monospace
+
+        _ ->
+            -- Don't know if this is right
+            let
+                fontStrings =
+                    fontFamily
+                        |> List.reverse
+                        |> List.Extra.uncons
+            in
+            case fontStrings of
+                Just ( fontStyle, fontNames ) ->
+                    fontNames
+                        |> List.map (\x -> "\"" ++ x ++ "\"")
+                        |> (::) fontStyle
+                        |> List.reverse
+                        |> String.join ", "
+                        |> T.Font
+
+                Nothing ->
+                    -- Default to sans-serif
+                    T.Sansserif
