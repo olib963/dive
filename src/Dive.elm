@@ -11,6 +11,7 @@ module Dive exposing
     , frame
     , duration
     , transformFrame
+    , WindowSize
     )
 
 {-| Dive is a framework for programming visual presentations like
@@ -186,6 +187,12 @@ type alias Msg =
     Dive.Update.Msg
 
 
+{-| TODO should we instead do a getViewportSize and get rid of this type alias?
+-}
+type alias WindowSize =
+    Dive.Model.WindowSize
+
+
 {-| Initialize the Dive `Model` with the viewport size.
 -}
 init : WindowSize -> Model
@@ -233,6 +240,9 @@ type alias Size =
 
 
 {-| Reusing `Collage.LineStyle` here.
+
+TODO this is a breaking change! Make this consistent with the old API
+
 -}
 type alias LineStyle =
     Collage.LineStyle
