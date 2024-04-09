@@ -1,6 +1,6 @@
 # Dive
 
-Dive is a framework written in [Elm](http://elmlang.org) for programming visual presentations like [Prezi](https://prezi.com)'s. 
+Dive is a framework written in [Elm](http://elmlang.org) for programming visual presentations like [Prezi](https://prezi.com)'s.
 
 If you are interested in an approach based on SVG, check out [Dive SVG](https://github.com/myrho/dive-svg).
 
@@ -21,21 +21,21 @@ Then run:
 
 ## Example
 
-Create a file named `Main.elm` and copy/paste the following piece of code into it:
+Create a file named `src/Main.elm` and copy/paste the following piece of code into it:
 
-    import Html 
+    import Browser
     import Dive exposing (..)
     import Dive.ElmLogo exposing (logo)
 
     world =
       [ logo (0,0) (1,1)
       , text (0,0) "Hello Dive!"
-        |> transformObject (0.001,0.001) (0,0) 
+        |> transformObject (0.001,0.001) (0,0)
       ]
 
     frames =
       [ frame (1,1) (0,0)
-      , frame (0.01, 0.01) (0,0) 
+      , frame (0.01, 0.01) (0,0)
         |> duration 2000
       ]
 
@@ -47,17 +47,17 @@ Create a file named `Main.elm` and copy/paste the following piece of code into i
       )
 
     main =
-      Html.programWithFlags
+      Browser.element
         { init = init
         , update = Dive.update
         , view = Dive.view
-        , subscriptions = 
+        , subscriptions =
             Dive.subscriptions
         }
 
 Build it:
 
-    elm make --output elm.js
+    elm make src/Main.elm --output elm.js
 
 Create a file named `index.html` and copy/paste the following piece of code into it:
 
@@ -67,12 +67,16 @@ Create a file named `index.html` and copy/paste the following piece of code into
         <script type="text/javascript" src="elm.js"></script>
       </head>
       <body style="margin:0; padding:0; overflow:hidden;">
+        <div id="elm-node"></div>
         <script type="text/javascript">
           var size =
             { width : window.innerWidth
             , height : window.innerHeight
             };
-          Elm.Main.fullscreen(size);
+          Elm.Main.init({
+            node: document.getElementById("elm-node") ,
+            flags: size,
+          });
         </script>
       </body>
     </html>

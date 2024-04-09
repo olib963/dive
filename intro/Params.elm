@@ -1,9 +1,14 @@
 module Params exposing (..)
 
+
 font =
-  [ "Helvetica", "sans"
-  ]
+    [ "Helvetica"
+    , "sans"
+    ]
+
 
 fontCode =
-  [ "Inconsolata", "Courier New", "monospace"
-  ]
+    [ "Inconsolata"
+    , "Courier New"
+    , "monospace"
+    ]
